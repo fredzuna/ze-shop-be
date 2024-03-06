@@ -1,0 +1,48 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_PORT: ${MYSQL_PORT:-3306}
+    ports:
+      - "3307:${MYSQL_PORT:-3306}"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount the initialization script      
+      - mysql_data:/var/lib/mysql
+  nestjs-backend:
+    image: backend
+    container_name: app_be
+    build:
+      context: .
+    depends_on:
+      - mysql    
+    command: sh -c "sleep 10 && npm run start:dev" 
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      PROD_DOMAIN_ENABLE_CORS: ${PROD_DOMAIN_ENABLE_CORS}
+      LOCAL_DOMAIN_ENABLE_CORS: ${LOCAL_DOMAIN_ENABLE_CORS}
+      WEATHER_API_KEY: ${WEATHER_API_KEY}      
+    ports:
+      - "3020:3000"
+
+  react-frontend:
+    image: frontend
+    container_name: app_fe
+    build:
+      context: ../fredy.zuna_00-001fechallenge
+    ports:
+      - "3021:3021"
+    volumes:
+      - ../fredy.zuna_00-001fechallenge:/usr/src/client   
+      - /usr/src/client/node_modules
+volumes:
+  mysql_data:         
