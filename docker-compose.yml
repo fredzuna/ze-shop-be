@@ -34,15 +34,15 @@ services:
     ports:
       - "3020:3000"
 
-  react-frontend:
-    image: frontend
-    container_name: app_fe
-    build:
-      context: ../fredy.zuna_00-001fechallenge
-    ports:
-      - "3021:3021"
-    volumes:
-      - ../fredy.zuna_00-001fechallenge:/usr/src/client   
-      - /usr/src/client/node_modules
+  #react-frontend:
+  #  image: frontend
+  #  container_name: app_fe
+  #  build:
+  #    context: ../fredy.zuna_00-001fechallenge
+  #  ports:
+  #    - "3021:3021"
+  #  volumes:
+  #    - ../fredy.zuna_00-001fechallenge:/usr/src/client   
+  #    - /usr/src/client/node_modules
 volumes:
   mysql_data:         

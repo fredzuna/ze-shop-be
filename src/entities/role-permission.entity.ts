@@ -11,8 +11,8 @@ export class RolePermission {
   dateCreated: Date;
 
   @ManyToOne(() => Role, (role) => role.rolePermissions)
-  public role: Role
+  public role: Role;
 
   @ManyToOne(() => Permission, (permission) => permission.rolePermissions)
-  public permission: Permission
+  public permission: Permission;
 }

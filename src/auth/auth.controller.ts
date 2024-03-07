@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Request, UseGuards, Get, ConflictException, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Request,
+  UseGuards,
+  Get,
+  ConflictException,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
@@ -15,27 +24,36 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  async register(@Body(new ValidationPipe()) createUserDto: CreateUserDto): Promise<{ access_token: string }> {
-    const existingUser = await this.userService.findByEmail(createUserDto.email);
+  async register(
+    @Body(new ValidationPipe()) createUserDto: CreateUserDto,
+  ): Promise<{ access_token: string }> {
+    const existingUser = await this.userService.findByEmail(
+      createUserDto.email,
+    );
 
     if (existingUser) {
       throw new ConflictException('Email already exists');
     }
 
-    const {password, ...newUser } = await this.userService.create(createUserDto);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...newUser } =
+      await this.userService.create(createUserDto);
     return this.authService.login(newUser);
   }
 
-  @UseGuards(LoginAuthGuard)  
-  @Post('login')  
-  async login(@Body(new ValidationPipe()) loginDto: LoginDto, @Request() req): Promise<{ access_token: string }> {
+  @UseGuards(LoginAuthGuard)
+  @Post('login')
+  async login(
+    @Body(new ValidationPipe()) loginDto: LoginDto,
+    @Request() req,
+  ): Promise<{ access_token: string }> {
     const { user } = req;
     return this.authService.login(user);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req): Promise<UserAuthDto | undefined>  {        
+  getProfile(@Request() req): Promise<UserAuthDto | undefined> {
     const user: UserAuthDto = req.user;
     return this.userService.getUserProfile(user.email);
   }

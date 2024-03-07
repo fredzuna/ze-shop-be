@@ -12,15 +12,15 @@ import { LoginStrategy } from './login.strategy';
 import { UserRole } from '../entities/user-role.entity';
 
 @Module({
-  imports: [    
+  imports: [
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '120m' }, // adjust token expiration as needed
     }),
-    TypeOrmModule.forFeature([User, UserRole])
+    TypeOrmModule.forFeature([User, UserRole]),
   ],
   controllers: [AuthController],
-  providers: [LoginStrategy, JwtStrategy, AuthService, UserService],  
+  providers: [LoginStrategy, JwtStrategy, AuthService, UserService],
 })
 export class AuthModule {}

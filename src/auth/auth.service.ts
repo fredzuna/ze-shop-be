@@ -9,12 +9,13 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async validateUser(email: string, password: string): Promise<UserAuthDto> {
     const user = await this.userService.findByEmail(email);
 
     if (user && bcrypt.compareSync(password, user.password)) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
     }

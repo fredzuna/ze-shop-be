@@ -8,7 +8,10 @@ export class Permission {
 
   @Column()
   name: string;
-  
-  @OneToMany(() => RolePermission, rolePermission => rolePermission.permission)
+
+  @OneToMany(
+    () => RolePermission,
+    (rolePermission) => rolePermission.permission,
+  )
   public rolePermissions: RolePermission[];
 }

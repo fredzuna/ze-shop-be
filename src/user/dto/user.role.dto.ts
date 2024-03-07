@@ -1,5 +1,5 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-import { RoleDto } from "../../role/dto/role.dto";
+import { Field, ObjectType } from '@nestjs/graphql';
+import { RoleDto } from '../../role/dto/role.dto';
 
 @ObjectType()
 export class UserRoleDto {
@@ -7,9 +7,8 @@ export class UserRoleDto {
   id: number;
 
   @Field(() => Date)
-  createdDate: Date;  
+  createdDate: Date;
 
   @Field(() => RoleDto, { nullable: true })
-  public role: RoleDto
+  public role: RoleDto;
 }
-

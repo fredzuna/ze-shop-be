@@ -10,9 +10,9 @@ export class Role {
   @Column()
   name: string;
 
-  @OneToMany(() => UserRole, userRole => userRole.role)
+  @OneToMany(() => UserRole, (userRole) => userRole.role)
   public userRoles: UserRole[];
 
-  @OneToMany(() => RolePermission, rolePermission => rolePermission.role)
+  @OneToMany(() => RolePermission, (rolePermission) => rolePermission.role)
   public rolePermissions: RolePermission[];
 }
