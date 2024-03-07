@@ -7,10 +7,8 @@ import { UserResolver } from './user.resolver';
 import { UserRole } from '../entities/user-role.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User, UserRole])
-  ],
+  imports: [TypeOrmModule.forFeature([User, UserRole])],
   controllers: [UserController],
-  providers: [UserService, UserResolver],  
+  providers: [UserService, UserResolver],
 })
 export class UserModule {}

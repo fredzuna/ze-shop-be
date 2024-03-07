@@ -1,7 +1,5 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { RoleDto } from "../../role/dto/role.dto";
-import { UserRole } from "../../entities/user-role.entity";
-import { UserRoleDto } from "./user.role.dto";
+import { Field, ObjectType } from '@nestjs/graphql';
+import { UserRoleDto } from './user.role.dto';
 
 @ObjectType()
 export class UserRoleInfoDto {

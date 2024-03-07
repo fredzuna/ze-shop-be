@@ -9,7 +9,7 @@ import { UserAuthDto } from './dto/user.auth.dto';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor(private readonly userService: UserService,) {
+  constructor(private readonly userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -17,15 +17,16 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  async validate(payload: UserDecrypted): Promise<UserAuthDto> {    
+  async validate(payload: UserDecrypted): Promise<UserAuthDto> {
     try {
       const user = await this.userService.findByEmail(payload.email);
-  
+
       if (!user) {
         throw new UnauthorizedException('Invalid user');
       }
-  
-      const { password, ...authUser} = user;
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...authUser } = user;
       return authUser;
     } catch (error) {
       throw new UnauthorizedException('Invalid token');
